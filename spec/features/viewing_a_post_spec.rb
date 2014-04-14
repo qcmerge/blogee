@@ -6,7 +6,9 @@ feature 'Viewing a post spec' do
   scenario do
     visit posts_path
     click_link post.title
+
     expect(current_path).to eq post_path(post)
+
     within('#title') do
       expect(page).to have_content post.title
     end
