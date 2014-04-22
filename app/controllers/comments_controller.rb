@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :find_post
-  before_action :find_comment, only: [:show, :edit, :update]
+  before_action :find_comment, only: [:show, :edit, :update, :destroy]
   def new
     @comment = @post.comments.build
   end
@@ -22,6 +22,11 @@ class CommentsController < ApplicationController
       flash[:error] = "Comment has not been updated."
       render "edit"
     end
+  end
+
+  def destroy
+    @comment.destroy
+    redirect_to @post, notice: "Comment has been deleted."
   end
 
   private
