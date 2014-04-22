@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 feature "Viewing comments" do
-  before do
-    # setup everything you need - in this case, probably a good idea to set up
-    # two Posts, each with 1 Comment
-  end
+  let!(:post1) { create(:post) }
+  let!(:post2) { create(:post) }
+  let!(:comment1) { create(:comment, post: post1) }
+  let!(:comment2) { create(:comment, post: post2) }
 
   scenario do
-    # navigate to Post you want to check
-
-    # assert that you'll find the comment (author and content) associated with post to which you navigated
-
-    # assert that you did not find comment associated with the other post
+    visit posts_path
+    click_link post1.title
+    within(".comments") do
+      expect(page).to have_content(comment1.author)
+      expect(page).to_not have_content(comment2.author)
+    end
   end
-
 end
