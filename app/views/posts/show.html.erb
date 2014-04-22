@@ -12,5 +12,8 @@
     <div id="content">
       <p><%= @post.content %></p>
     </div>
+    <div class="comments">
+      <%= link_to 'Add Comment', new_post_comment_path(@post) %>
+    </div>
   </div>
 </div>
