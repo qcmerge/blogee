@@ -21,6 +21,6 @@
       <% end %>
     <% end %>
   </div>
-  <%= f.submit "Add Comment", class: "btn btn-primary" %>
+  <%= f.submit "#{@comment.new_record? ? 'Add Comment' : 'Update Comment'}", class: "btn btn-primary" %>
   <% end %>
 </div>
