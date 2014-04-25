@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_post
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def new
     @comment = @post.comments.build
@@ -16,16 +17,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def show
-    @comment = Comment.find(params[:id])
-  end
-
-  def edit
-    @comment = Comment.find(params[:id])
-  end
-
   def update
-    @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
       flash[:notice] = "Comment has been updated."
       redirect_to post_path(@post)
@@ -35,10 +27,19 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment.destroy
+    redirect_to post_path(@post)
+  end
+
   private
 
   def set_post
     @post = Post.find(params[:post_id])
+  end
+
+  def set_comment
+    @comment = Comment.find(params[:id])
   end
 
   def comment_params
