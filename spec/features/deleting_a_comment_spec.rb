@@ -1,18 +1,19 @@
 require 'spec_helper'
 
 feature 'Deleting a comment' do
-  #set up a post with two comments
+  let!(:post) { FactoryGirl.create(:post) }
+  let!(:comment_to_delete) { FactoryGirl.create(:comment, post: post, author: "Delete Me") }
+  let!(:second_comment) { FactoryGirl.create(:comment, post: post, author: "Don't Delete") }
 
   scenario do
-    # navigate to the post that is set up for the test
-    # click link to delete one of the comments
+    visit post_path(post)
+    click_link comment_to_delete.author
+    click_link "Delete Comment"
 
     # assert that Comment.count decreased by 1
 
-    # assert that we're back on post page
-
-    # assert that deleted comment is gone
-
-    # assert that other comment is still there
+    expect(current_path).to eq post_path(post)
+    expect(page).to_not have_content("Delete Me")
+    expect(page).to have_content("Don't Delete")
   end
 end
