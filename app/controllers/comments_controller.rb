@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
-  before_action :find_post
-  before_action :find_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_post
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+
   def new
     @comment = @post.comments.build
   end
@@ -8,19 +9,21 @@ class CommentsController < ApplicationController
   def create
     @comment = @post.comments.build(comment_params)
     if @comment.save
-      redirect_to @post, notice: "Comment has been saved."
+      flash[:notice] = "Comment has been saved."
+      redirect_to @post
     else
-      flash[:error] = "Comment has not been saved."
+      flash[:alert] = "Comment has not been saved."
       render "new"
     end
   end
 
   def update
     if @comment.update(comment_params)
-      redirect_to @post, notice: "Comment has been updated."
+      flash[:notice] = "Comment has been updated."
+      redirect_to post_path(@post)
     else
       flash[:error] = "Comment has not been updated."
-      render "edit"
+      redirect_to edit_post_path(@post)
     end
   end
 
@@ -35,7 +38,7 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:content, :author)
   end
 
-  def find_comment
+  def set_comment
     @comment = Comment.find(params[:id])
   end
 
