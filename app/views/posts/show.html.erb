@@ -13,7 +13,7 @@
       <p><%= @post.content %></p>
     </div>
     <div id="comment">
-      <%= @post.comments.each do |comment| %>
+      <% @post.comments.each do |comment| %>
         <p><%= link_to comment.author, post_comment_path(@post, comment) %> says <%= comment.content %></p>
       <% end %>
     </div>
