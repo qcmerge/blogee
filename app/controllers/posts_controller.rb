@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :require_signin!, except: [:show, :index]
   before_action :find_post, except: [:index, :new, :create
                                     ]
   def index
@@ -7,6 +8,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @post.user = current_user
   end
 
   def create

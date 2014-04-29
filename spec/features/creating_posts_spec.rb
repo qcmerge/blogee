@@ -1,17 +1,32 @@
 require 'spec_helper'
 
 feature 'Creating posts' do
+  before do
+    @user = FactoryGirl.create(:user)
+  end
+
   scenario 'with valid attributes' do
     # visit the posts path in the browser
     visit posts_path
     # find a link titled new post and click it
     click_link 'New Post'
+
+    message = "You need to sign in or sign up before continuing."
+    expect(page).to have_content(message)
+
+    fill_in "Username", with: @user.username
+    fill_in "Password", with: @user.password
+    click_button "Sign in"
+
     # find the text field called Title and fill it in with the text
+    visit posts_path
+    click_link 'New Post'
     fill_in 'Title', with: 'My First Post'
     # find the text field called Content and fill it in with the text
     fill_in 'Content', with: 'Lorem ipsum dolor sit amet.'
-    # find the text field called Author and fill it in with the text
-    fill_in 'Author', with: 'Randy Savage'
+
+    expect(find_field('user').value).to eq @user.username
+
     # find the button called Save and click it
     click_button 'Save'
     # Assert that there is now 1 post stored in the database
@@ -22,12 +37,22 @@ feature 'Creating posts' do
     expect(current_path).to eq post_path(post)
     # assert that the posts title is correct
     expect(post.title).to eq 'My First Post'
+
+    within "#title #author" do
+      expect(page).to have_content("Created by #{@user.username}")
+    end
   end
 
   scenario 'with invalid attributes' do
     # visit the posts path in the browser
     visit posts_path
     # find a link titled New Post and click it
+    click_link 'New Post'
+
+    fill_in "Username", with: @user.username
+    fill_in "Password", with: @user.password
+    click_button "Sign in"
+
     click_link 'New Post'
     # find the button called Save and click it
     click_button 'Save'
