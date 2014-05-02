@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 feature 'Editing a post' do
-  let!(:post) { create(:post) }
+  let!(:user) { create(:user) }
+  let!(:post) { create(:post, user: user) }
+
+  before { sign_in_as!(user) }
 
   scenario 'with valid attributes' do
     visit post_path(post)
@@ -10,7 +13,6 @@ feature 'Editing a post' do
 
     fill_in 'Title', with: 'Zombie Ipsum!!!'
     fill_in 'Content', with: 'Zombies reversus ab inferno, nam malum cerebro.'
-    fill_in 'Author', with: 'Daryl Dixon'
 
     click_button 'Save'
 
@@ -19,7 +21,7 @@ feature 'Editing a post' do
     expect(current_path).to eq post_path(post)
     expect(post.title).to eq 'Zombie Ipsum!!!'
     expect(post.content).to eq 'Zombies reversus ab inferno, nam malum cerebro.'
-    expect(post.author).to eq 'Daryl Dixon'
+    expect(post.user).to eq user
   end
 
   scenario 'with invalid attributes' do
@@ -28,7 +30,6 @@ feature 'Editing a post' do
 
     fill_in 'Title', with: ''
     fill_in 'Content', with: ''
-    fill_in 'Author', with: ''
     click_button 'Save'
 
     expect(current_path).to eq edit_post_path(post)

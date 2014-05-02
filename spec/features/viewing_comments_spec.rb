@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 feature "Viewing comments" do
-  let!(:post) { FactoryGirl.create(:post) }
+  let!(:post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
   let!(:comment) { FactoryGirl.create(:comment, post: post, author: "Find this") }
-  let!(:other_post) { FactoryGirl.create(:post) }
+  let!(:other_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
   let!(:other_comment) { FactoryGirl.create(:comment, post: other_post) }
 
   scenario do

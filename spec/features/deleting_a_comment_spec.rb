@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Deleting a comment' do
-  let!(:post) { FactoryGirl.create(:post) }
+  let!(:post) { FactoryGirl.create(:post, user: create(:user)) }
   let!(:comment_to_delete) { FactoryGirl.create(:comment, post: post, author: "Delete Me") }
   let!(:second_comment) { FactoryGirl.create(:comment, post: post, author: "Don't Delete") }
 

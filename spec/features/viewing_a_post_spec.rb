@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 feature 'Viewing a post spec' do
-  let!(:post) { create(:post) }
+  let!(:user) { create(:user) }
+  let!(:post) { create(:post, user: user) }
 
   scenario do
     visit posts_path
@@ -15,8 +16,8 @@ feature 'Viewing a post spec' do
     within('#content') do
       expect(page).to have_content post.content
     end
-    within('#author') do
-      expect(page).to have_content post.author
+    within('#title #author') do
+      expect(page).to have_content user.username
     end
   end
 end

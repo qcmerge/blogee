@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Creating Comments" do
   before do
-    @post = FactoryGirl.create(:post)
+    @post = FactoryGirl.create(:post, user: FactoryGirl.create(:user))
     visit post_path(@post)
     click_link "Add Comment"
   end
