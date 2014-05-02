@@ -25,8 +25,6 @@ feature 'Creating posts' do
     # find the text field called Content and fill it in with the text
     fill_in 'Content', with: 'Lorem ipsum dolor sit amet.'
 
-    expect(find_field('user').value).to eq @user.username
-
     # find the button called Save and click it
     click_button 'Save'
     # Assert that there is now 1 post stored in the database
@@ -39,7 +37,7 @@ feature 'Creating posts' do
     expect(post.title).to eq 'My First Post'
 
     within "#title #author" do
-      expect(page).to have_content("Created by #{@user.username}")
+      expect(page).to have_content("Created by: #{@user.username}")
     end
   end
 
