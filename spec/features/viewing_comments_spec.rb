@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 feature "Viewing comments" do
-  let!(:post1) { create(:post) }
-  let!(:post2) { create(:post) }
-  let!(:comment1) { create(:comment, post: post1) }
-  let!(:comment2) { create(:comment, post: post2) }
+  let!(:post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+  let!(:comment) { FactoryGirl.create(:comment, post: post, author: "Find this") }
+  let!(:other_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+  let!(:other_comment) { FactoryGirl.create(:comment, post: other_post) }
 
   scenario do
     visit posts_path

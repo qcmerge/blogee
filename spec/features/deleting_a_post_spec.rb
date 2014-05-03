@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 feature 'Deleting a post' do
-  let!(:post) { create(:post) }
+  let(:user) { create(:user) }
+  let!(:post) { create(:post, user: user) }
+
+  before { sign_in_as!(user) }
 
   scenario do
     visit post_path(post)
