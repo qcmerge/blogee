@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 20140429132218) do
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
-    t.string   "author"
     t.text     "content"
+    t.string   "author"
     t.integer  "post_id"
     t.datetime "created_at"
     t.datetime "updated_at"

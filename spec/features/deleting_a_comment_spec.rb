@@ -6,14 +6,11 @@ feature 'Deleting a comment' do
   let!(:second_comment) { FactoryGirl.create(:comment, post: post, author: "Don't Delete") }
 
   scenario do
-    visit post_path(post)
-    click_link comment_to_delete.author
+    visit posts_path
+    click_link post.title
+    click_link comment.author
     click_link "Delete Comment"
-
-    # assert that Comment.count decreased by 1
-
-    expect(current_path).to eq post_path(post)
-    expect(page).to_not have_content("Delete Me")
-    expect(page).to have_content("Don't Delete")
+    expect(page).to have_content("Comment has been deleted.")
+    expect(page).to_not have_content(comment.author)
   end
 end
