@@ -6,4 +6,6 @@ class Post < ActiveRecord::Base
 
   validates :title, :presence => true
   validates :content, :presence => true
+
+  scope :published, -> { where('published_at IS NOT NULL') }
 end

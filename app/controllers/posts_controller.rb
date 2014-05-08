@@ -3,7 +3,11 @@ class PostsController < ApplicationController
   before_action :find_post, except: [:index, :new, :create]
   
   def index
-    @posts = Post.all
+    @posts = if current_user
+               Post.all
+             else
+               Post.published
+             end
   end
 
   def new
