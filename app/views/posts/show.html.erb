@@ -2,6 +2,9 @@
   <div class="col-md-12">
     <div id="title">
       <h1><%= @post.title %></h1>
+      <% if @post.published_at.nil? %>
+        <span class="label label-danger">DRAFT</span>
+      <% end %>
       <span id='author'>Created by: <%= @post.user.username %></span>
       <%= link_to "Edit Post", edit_post_path(@post) %>
       <%= link_to "Delete Post", @post, method: :delete %>

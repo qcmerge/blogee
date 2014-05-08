@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :require_signin!, except: [:show, :index]
-  before_action :find_post, except: [:index, :new, :create
-                                    ]
+  before_action :find_post, except: [:index, :new, :create]
+  
   def index
     @posts = Post.all
   end
@@ -44,6 +44,18 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :author, :asset)
+    if params[:commit] == 'Save'
+      params.require(:post).permit(:title,
+                                   :content,
+                                   :author,
+                                   :asset,
+                                   :published_at).merge(published_at: Date.today)
+    else
+      params.require(:post).permit(:title,
+                                   :content,
+                                   :author,
+                                   :asset,
+                                   :published_at).merge(published_at: nil)
+    end
   end
 end
