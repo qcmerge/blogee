@@ -8,9 +8,9 @@ feature 'Deleting a comment' do
   scenario do
     visit posts_path
     click_link post.title
-    click_link comment.author
+    click_link comment_to_delete.author
     click_link "Delete Comment"
     expect(page).to have_content("Comment has been deleted.")
-    expect(page).to_not have_content(comment.author)
+    expect(page).to_not have_content(comment_to_delete.author)
   end
 end

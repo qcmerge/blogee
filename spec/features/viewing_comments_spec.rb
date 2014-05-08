@@ -8,10 +8,10 @@ feature "Viewing comments" do
 
   scenario do
     visit posts_path
-    click_link post1.title
+    click_link post.title
     within(".comments") do
-      expect(page).to have_content(comment1.author)
-      expect(page).to_not have_content(comment2.author)
+      expect(page).to have_content(comment.author)
+      expect(page).to_not have_content(other_comment.author)
     end
   end
 end

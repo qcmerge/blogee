@@ -24,7 +24,8 @@
          </small></p>
       </div>
     <% end %>
-    <div id="comment">
+    <div id="comment" class="comments">
+      <%= link_to 'Add Comment', new_post_comment_path(@post) %>
       <% @post.comments.each do |comment| %>
         <p><%= link_to comment.author, post_comment_path(@post, comment) %> says <%= comment.content %></p>
       <% end %>
