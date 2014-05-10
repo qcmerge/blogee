@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.build(comment_params)
     if @comment.save
       flash[:notice] = "Comment has been saved."
+      Notifier.new_comment(@post.user).deliver
       redirect_to @post
     else
       flash[:alert] = "Comment has not been saved."
@@ -43,6 +44,6 @@ class CommentsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find(params[:post_id])    
+    @post = Post.find(params[:post_id])
   end
 end
