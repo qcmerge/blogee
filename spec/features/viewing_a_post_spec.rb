@@ -16,7 +16,7 @@ feature 'Viewing a post spec' do
     within('#content') do
       expect(page).to have_content post.content
     end
-    within('#title #author') do
+    within('#author') do
       expect(page).to have_content user.username
     end
   end

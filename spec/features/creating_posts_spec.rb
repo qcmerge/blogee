@@ -22,8 +22,8 @@ feature 'Creating posts' do
     expect(current_path).to eq post_path(post)
     expect(post.title).to eq 'My First Post'
 
-    within "#title #author" do
-      expect(page).to have_content("Created by: #{user.username}")
+    within "#author" do
+      expect(page).to have_content("By: #{user.username}")
     end
   end
 
