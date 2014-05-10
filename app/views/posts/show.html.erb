@@ -16,16 +16,18 @@
       <%= image_tag @post.asset.url, class: "post-image" %>
       <p><%= @post.content %></p>
     </div>
-    <% if @post.asset.present? %>
+    <% if current_user %>
+      <% if @post.asset.present? %>
       <h3>Attached File</h3>
       <div id="asset">
         <p>
           <%= link_to File.basename(@post.asset.path),
-                       @post.asset.url %>
+              @post.asset.url %>
         </p>
         <p><small><%= number_to_human_size(@post.asset.size) %>
-         </small></p>
+        </small></p>
       </div>
+      <% end %>
     <% end %>
     <div id="comment" class="comments">
       <%= link_to 'Add Comment', new_post_comment_path(@post) %>
