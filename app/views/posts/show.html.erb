@@ -16,6 +16,9 @@
       <%= image_tag @post.asset.url, class: "post-image" %>
       <p><%= @post.content %></p>
     </div>
+    <div id="tags">
+      <%= render @post.tags %>
+    </div>
     <% if current_user %>
       <% if @post.asset.present? %>
       <h3>Attached File</h3>

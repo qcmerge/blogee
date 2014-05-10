@@ -52,4 +52,16 @@ feature 'Creating posts' do
     expect(Post.last.published_at).to be_nil
     expect(page).to have_content('DRAFT')
   end
+
+  scenario "Creating a post with tags" do
+    fill_post_details
+
+    fill_in 'post_tag_names', with: 'browser visual'
+    click_button "Save"
+
+    within("#tags") do
+      expect(page).to have_content("browser")
+      expect(page).to have_content("visual")
+    end
+  end
 end

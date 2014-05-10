@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :require_signin!, except: [:show, :index]
   before_action :find_post, except: [:index, :new, :create]
-  
+
   def index
     @posts = if current_user
                Post.all
@@ -53,12 +53,14 @@ class PostsController < ApplicationController
                                    :content,
                                    :author,
                                    :asset,
+                                   :tag_names,
                                    :published_at).merge(published_at: Date.today)
     else
       params.require(:post).permit(:title,
                                    :content,
                                    :author,
                                    :asset,
+                                   :tag_names,
                                    :published_at).merge(published_at: nil)
     end
   end
