@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20140510151449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "comments", force: true do |t|
     t.string   "author"
@@ -39,13 +40,13 @@ ActiveRecord::Schema.define(version: 20140510151449) do
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
-  create_table "posts_tags", id: false, force: true do |t|
-    t.integer "tag_id"
-    t.integer "post_id"
-  end
-
   create_table "tags", force: true do |t|
     t.string "name"
+  end
+
+  create_table "tags_posts", id: false, force: true do |t|
+    t.integer "tag_id"
+    t.integer "post_id"
   end
 
   create_table "users", force: true do |t|
